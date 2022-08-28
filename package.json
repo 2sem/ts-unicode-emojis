@@ -3,7 +3,10 @@
   "name": "ts-unicode-emojis",
   "version": "1.0.0",
   "description": "emoji unicode collection type and loader",
-  "main": "index.ts",
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "main": "src/index.ts",
   "repository": "git@github.com:2sem/ts-unicode-emojis.git",
   "author": "leesam <toyboy2@hanmail.net>",
   "license": "MIT",

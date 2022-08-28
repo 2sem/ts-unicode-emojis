@@ -1,4 +1,4 @@
-import { EmojiCategory, EmojiPlatforms, EmojiSubCategory } from "./types"
+import { Emoji, EmojiCategory, EmojiPlatforms, EmojiSubCategory } from "./types"
 
 export const loadEmojiCategories = (json: string, suppportedPlatforms?: EmojiPlatforms): EmojiCategory[]  => {
     const raws: EmojiRaw[] = JSON.parse(json)
@@ -48,3 +48,5 @@ type EmojiRaw = {
     has_img_twitter: boolean
     has_img_facebook: boolean
 }
+
+export type { EmojiCategory, EmojiSubCategory, Emoji }

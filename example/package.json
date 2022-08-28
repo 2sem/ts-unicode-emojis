@@ -8,6 +8,6 @@
     "load": "npx ts-node index.ts"
   },
   "dependencies": {
-    "ts-unicode-emojis": "1.0.0"
+    "ts-unicode-emojis": "https://github.com/2sem/ts-unicode-emojis"
   }
 }

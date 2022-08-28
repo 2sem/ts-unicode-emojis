@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { EmojiCategory } from "../src/types";
+import { EmojiCategory } from "ts-unicode-emojis";
 
 const json = readFileSync('./emoji_categories.json').toString()
 
@@ -15,3 +15,5 @@ for(const category of emojiCategires) {
         console.log('sub categiry', 'name', subCategory.name, 'emoji count', subCategory.emojis.length)
     }
 }
+
+export type { EmojiCategory }

@@ -2,6 +2,6 @@
 # yarn lockfile v1
 
 
-"ts-unicode-emojis@https://github.com/2sem/ts-unicode-emojis.git":
+"ts-unicode-emojis@https://github.com/2sem/ts-unicode-emojis":
   version "1.0.0"
-  resolved "https://github.com/2sem/ts-unicode-emojis.git#4986a049ac4ba8510052e34ff23b20209e9b0029"
+  resolved "https://github.com/2sem/ts-unicode-emojis#e2584dd8594519861318ba279e664cb9ce0c05f0"

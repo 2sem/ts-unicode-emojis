@@ -1,0 +1,13 @@
+{
+
+  "name": "example",
+  "version": "1.0.0",
+  "description": "ts-unicode-emojis example",
+  "scripts": {
+    "json": "npx ts-node generator.ts > emoji_categories.json",
+    "load": "npx ts-node index.ts"
+  },
+  "dependencies": {
+    "ts-unicode-emojis": "1.0.0"
+  }
+}

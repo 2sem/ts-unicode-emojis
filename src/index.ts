@@ -1,7 +1,9 @@
 import { Emoji, EmojiCategory, EmojiPlatforms, EmojiSubCategory } from "./types"
 
 export const loadEmojiCategories = (json: string, suppportedPlatforms?: EmojiPlatforms): EmojiCategory[]  => {
-    const raws: EmojiRaw[] = JSON.parse(json)
+    let raws: EmojiRaw[] = JSON.parse(json)
+    raws = raws.sort((leftRaw, rightRaw) => leftRaw.sort_order - rightRaw.sort_order)
+
     const categorySet: {[key: string] : EmojiCategory} = {}
     const subCategorySet: {[key: string] : EmojiSubCategory} = {}
     const platforms = suppportedPlatforms
@@ -75,4 +77,4 @@ type EmojiRaw = {
     has_img_facebook: boolean
 }
 
-export type { EmojiCategory, EmojiSubCategory, Emoji }
+export type { EmojiCategory, EmojiSubCategory, Emoji, EmojiPlatforms }

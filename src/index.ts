@@ -1,12 +1,14 @@
-import { Emoji, EmojiCategory, EmojiPlatforms, EmojiSubCategory } from "./types"
+import { Emoji, EmojiCategory, EmojiLoadingOptions, EmojiPlatforms, EmojiSubCategory } from "./types"
 
-export const loadEmojiCategories = (json: string, suppportedPlatforms?: EmojiPlatforms): EmojiCategory[]  => {
+export const loadEmojiCategories = (json: string, options: EmojiLoadingOptions = DefaultLoadingOptions): EmojiCategory[]  => {
     let raws: EmojiRaw[] = JSON.parse(json)
     raws = raws.sort((leftRaw, rightRaw) => leftRaw.sort_order - rightRaw.sort_order)
 
     const categorySet: {[key: string] : EmojiCategory} = {}
     const subCategorySet: {[key: string] : EmojiSubCategory} = {}
-    const platforms = suppportedPlatforms
+    const platforms = options?.platforms
+    const containingUnicodes = options?.unicodes ?? false
+    const containingChar = options?.char ?? (containingUnicodes ? false : true)
 
     const categories = raws.reduce((list, raw) => {
         let category = categorySet[raw.category]
@@ -34,12 +36,15 @@ export const loadEmojiCategories = (json: string, suppportedPlatforms?: EmojiPla
 
         if (!isSupported) return list
 
+        const unicodes = raw.unified.split('-').map(code => parseInt(code, 16)) 
+
         subCategory.emojis.push({
             id: raw.sort_order,
             name: raw.name,
             shortNames: raw.short_names,
-            unicodes: raw.unified.split('-').map(code => parseInt(code, 16)),
-            ...(platforms &&
+            unicodes: containingUnicodes ? unicodes : undefined,
+            char: containingChar ? String.fromCodePoint(...unicodes) : undefined,
+            ...(!platforms &&
                  { apple: raw.has_img_apple,
                     google: raw.has_img_google,
                     facebook: raw.has_img_facebook,
@@ -62,6 +67,11 @@ export const loadEmojiCategories = (json: string, suppportedPlatforms?: EmojiPla
 
         return list
     }, [] as EmojiCategory[])
+}
+
+const DefaultLoadingOptions: EmojiLoadingOptions = {
+    unicodes: true,
+    char: true
 }
 
 type EmojiRaw = {

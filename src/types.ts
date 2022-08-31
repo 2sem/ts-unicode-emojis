@@ -1,10 +1,17 @@
 export type Emoji = {
     id: number
     name: string,
-    unicodes: number[],
+    unicodes?: number[],
+    char?: string
     shortNames: string[]
     
 } & EmojiPlatforms
+
+export type EmojiLoadingOptions = {
+    platforms?: EmojiPlatforms
+    unicodes?: boolean
+    char?: boolean
+}
 
 export type EmojiPlatforms = {
     apple?: boolean

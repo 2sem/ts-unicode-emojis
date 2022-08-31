@@ -8,7 +8,7 @@ const emojiCategires = loadEmojiCategories(json, {
         google: true,
         apple: true
     }, 
-    // unicodes: true,
+    unicodes: true,
     char: true,
 })
 

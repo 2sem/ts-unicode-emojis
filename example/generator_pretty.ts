@@ -12,4 +12,4 @@ const emojiCategires = loadEmojiCategories(json, {
     char: true,
 })
 
-console.log(JSON.stringify(emojiCategires))
+console.log(JSON.stringify(emojiCategires, null, 2))

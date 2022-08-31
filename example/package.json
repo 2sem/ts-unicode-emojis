@@ -5,6 +5,7 @@
   "description": "ts-unicode-emojis example",
   "scripts": {
     "json": "npx ts-node generator.ts > emoji_categories.json",
+    "json-pretty": "npx ts-node generator_pretty.ts > emoji_categories_pretty.json",
     "load": "npx ts-node index.ts"
   },
   "dependencies": {

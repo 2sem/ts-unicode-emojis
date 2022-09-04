@@ -9,22 +9,27 @@ export const loadEmojiCategories = (json: string, options: EmojiLoadingOptions =
     const platforms = options?.platforms
     const containingUnicodes = options?.unicodes ?? false
     const containingChar = options?.char ?? (containingUnicodes ? false : true)
+    const containingSubCategories = options?.subCategories ?? true
 
     const categories = raws.reduce((list, raw) => {
         let category = categorySet[raw.category]
         
         if (!category) {
-            category = { name: raw.category, subCategories: [] }
+            category = { 
+                name: raw.category, 
+                subCategories: containingSubCategories ? [] : undefined, 
+                emojis: containingSubCategories ? undefined : [] 
+            }
             categorySet[raw.category] = category
             list.push(category)
         }
 
         const subCategoryKey = `${raw.category}_${raw.subcategory}`
         let subCategory = subCategorySet[subCategoryKey]
-        if (!subCategory) {
+        if (containingSubCategories && !subCategory) {
             subCategory = { name: raw.subcategory, emojis: [] }
             subCategorySet[subCategoryKey] = subCategory
-            category.subCategories.push(subCategory)
+            category.subCategories?.push(subCategory)
         }
 
         const isSupportApple = platforms?.apple !== undefined ? raw.has_img_apple === platforms?.apple : true
@@ -38,7 +43,7 @@ export const loadEmojiCategories = (json: string, options: EmojiLoadingOptions =
 
         const unicodes = raw.unified.split('-').map(code => parseInt(code, 16)) 
 
-        subCategory.emojis.push({
+        const emoji: Emoji = {
             id: raw.sort_order,
             name: raw.name,
             shortNames: raw.short_names,
@@ -50,19 +55,29 @@ export const loadEmojiCategories = (json: string, options: EmojiLoadingOptions =
                     facebook: raw.has_img_facebook,
                     twitter: raw.has_img_twitter
             })
-        })
+        }
+
+        if (containingSubCategories) {
+            subCategory.emojis.push(emoji)
+        } else {
+            category.emojis?.push(emoji)
+        }
 
         return list
     }, [] as EmojiCategory[])
 
     return categories.reduce((list, category) => {
-        const filteredSubCategories = category.subCategories.filter(subCategory => subCategory.emojis.length > 0)
-        if (filteredSubCategories.length <= 0) 
+        const filteredSubCategories = category.subCategories?.filter(subCategory => subCategory.emojis.length > 0) ?? []
+        if (containingSubCategories) {
+            if (filteredSubCategories.length <= 0)             
+                return list
+        } else if ((category.emojis?.length ?? 0) <= 0){
             return list
+        } 
 
         list.push({
             ...category,
-            subCategories: filteredSubCategories     
+            subCategories: containingSubCategories ? filteredSubCategories : undefined
         })
 
         return list
@@ -71,7 +86,8 @@ export const loadEmojiCategories = (json: string, options: EmojiLoadingOptions =
 
 const DefaultLoadingOptions: EmojiLoadingOptions = {
     unicodes: true,
-    char: true
+    char: true,
+    subCategories: true
 }
 
 type EmojiRaw = {

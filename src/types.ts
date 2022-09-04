@@ -11,6 +11,11 @@ export type EmojiLoadingOptions = {
     platforms?: EmojiPlatforms
     unicodes?: boolean
     char?: boolean
+    /**
+     * Whether the categories should contain sub categories
+     * Default: true
+     */
+    subCategories?: boolean
 }
 
 export type EmojiPlatforms = {
@@ -22,7 +27,8 @@ export type EmojiPlatforms = {
 
 export type EmojiCategory = {
     name: string
-    subCategories: EmojiSubCategory[]
+    subCategories?: EmojiSubCategory[]
+    emojis?: Emoji[]
 }
 
 export type EmojiSubCategory = {

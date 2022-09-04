@@ -10,6 +10,7 @@ const emojiCategires = loadEmojiCategories(json, {
     }, 
     // unicodes: true,
     char: true,
+    subCategories: false
 })
 
 console.log(JSON.stringify(emojiCategires, null, 2))

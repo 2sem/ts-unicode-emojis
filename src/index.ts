@@ -58,9 +58,9 @@ export const loadEmojiCategories = (json: string, options: EmojiLoadingOptions =
         }
 
         if (containingSubCategories) {
-            subCategory.emojis.push(emoji)
+            subCategory?.emojis.push(emoji)
         } else {
-            category.emojis?.push(emoji)
+            category?.emojis?.push(emoji)
         }
 
         return list
